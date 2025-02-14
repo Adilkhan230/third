@@ -1,105 +1,150 @@
-window.requestAnimationFrame = window.requestAnimationFrame
-    || (function() {
-        return function (callback, element) {
-            var lastTime = elemnt._lastTime;
-            if(lastTime === undefined) lastTime = 0
-            var currTime = Date.now()
-            var timeToCall = Math.max(1, 33 - (currTime - LastTime));
-            window.setTimeout(callback, timeToCall);
-            element.__lastTime = currTime + timeToCall
-        };
-    })();
-window.isDevice = /android|webos|iphone|ipod|iemobile|opera mini/i.test((navigator.userAgent || windod.opera).toLowerCase());
-var loaded = false
-var init = function () {
-    if(loaded) return;
-    loaded = true;
-    var mobile = window.isDevice;
-    var userDevice = mobile ? 0.5 : 1;
-    var canvas = document.getElementById("chaotic-lines-heart");
-    var ctx = canvas.getContext("2d");
-    var width = (canvas.width = userDevice + innerWidth)
-    var height = (canvas.height = userDevice+ innerHeight);
-    var ran = Math.random;
-    ctx.fillStyle = "#000000"
-    ctx.fillRect(0, 0, width, height);
-    var heartPosition = function (rad) {
-        return [Math.pow(Math.sin(rad), 3) - (15 * Math.cos(rad)- 5 * Math.cos(2*rad) - 2*Math.cos(3*rad)- Math.cos(4*rad))];
-    };
-    var scaleAndTranslate = function (pos, sx, sy, dx, dy) { return [dx+pos[0] * sx, dy+pos[1]* sy]; };
-    windod.addEventListener("resize", function () {
-        width = canvas.width = userDevice * innerWidth;
-        height = canvas.height = userDevice *innerHeight;
-        ctx.fillStyle = "#000000";
-        ctx.fillRect(0, 0, width, height);
+// task 1
+function canPurchaseAlcohog(age){
+    let permission = (age >= 21) ? true: false 
+    return permission    
+}
 
-    })
-    var traceCount = mobile ? 20:58;
-    var pointsOrigin = [];
-    var i;
-    var dr = mobile ? 0.3 : 0.1;
-    for (i = 0; i < Math.Pi * 2; i += dr) pointsOrigin.push(scaleAndTranslate(heartPosition(i), 210, 13, 0, 0));
-    for (i = 0; i < Math.Pi * 2; i += dr) pointsOrigin.push(scaleAndTranslate(heartPosition(i), 150, 9, 0, 0));
-    for (i = 0; i < Math.Pi * 2; i += dr) pointsOrigin.push(scaleAndTranslate(heartPosition(i), 90, 5, 0, 0));
-    var heartPointsCount = pointsOrigin.length;
-    var targetPoints = [];
-    var pulse = function(kx,ky) {
-        for ( i = 0; i < pointsOrigin.length; i++) {
-            targetPoints[i] = [];
-            targetPoints[i][0] = kx * pointsOrigin[i][0] + width / 2;
-            targetPoints[i][1] = ky * pointsOrigin[i][1] + height / 2;
-        }
-    };
-    var e = [];
-    for ( i = 0; i < heartPointsCount; i++) {
-        var x = ran() * width;
-        var y = ran() * height;
-        e[i] = {
-            vx:0, vy : 0, R: 2, speed : ran()+5, q : ~~(ran()* heartPointsCount), D: 2 * (i % 2) -1, force: 0.25 * ran() + 0.75, f: "hsla(0, " + ~~(40 * ran() + 60) + "%, 0.5", trace: []
-        };
-        for (var k = 0; k < traceCount; k++) e[i].trace[k] = {x: x, y: y};
+canPurchaseAlcohog(21)
+function canPurchaseAlcohog2(age) {
+    let permission2 = (age >= 21) || false;
+    return permission2
+}
+canPurchaseAlcohog2(32)
+// task 2
+function max(a,b) {
+    if (a > b) {
+        return a
+    } else {
+        return b
     }
-    var config = {traceK: 0.4, timeDelta: 0.01};
-    var time = 0;
-    var loop = function() {
-        var n = -Math.cos(time);
-        pulse((1+n)* 0.5, (1+n)*0.5);
-        time += (Math.sin(time) < 0 ? 9: n > 0.75 ? 0.25 : 1) * config.timeDelta;
-        ctx.fillStyle = "#0000001a";
-        ctx.fillRect(0, 0, width, height);
-        for ( i = e.length; i--;) {
-            var u = e[i];
-            var q = targetPoints[u, q];
-            var dx = u.trace[0].x -q[0];
-            var dy = u.trace[0].y - q[1];
-            var lenght = Math.sqrt(dx*dx + dy* dy);
-            if (10 > length) {
-                if (0.95 < ran()) {u. q = ~~(ran()=heartPointsCount); } else {
-                    if (0.99 < ran()) u.D *= -1;
-                    u.q *= u.D;
-                    u.q %= heartPointsCount;
-                    if (0 > u.q) u.q += heartPointsCount;
-                }
-            }
-            u.vx += (-dx/length) * u.speed;
-            u.vy += (-dy/length) * u.speed;
-            u.trace[0].x += u.vx;
-            u.trace[0] += u.vy;
-            u.vx += u.force;
-            u.vy += u.force;
-            for (k = 0; k < u.trace.length - 1;) {
-                var T = u.trace[k];
-                var N = u.trace[++k];
-                N.x -= config.traceK * (N.x - T.x);
-                N.y -= config.traceK * (N.y - T.y);
-            }
-            CanvasRenderingContext2D.fillStyle = u.f;
-            for (k = 0; k < u.trace.length; k++) ctx.fillRect(u.trace[k].x , u.trace[k].y, 1, 1);
-         }
-         window.requestAnimationFrame(loop, canvas);
-    };
-    loop();
+}
+max(50,3)
+// task 3
+const colorCode = +prompt('Enter color ocode (1-red, 2-blue, 3-green)', "" );
+let colour;
+switch (colorCode) {
+    case 1:
+       colour = 'You have chosen red colour'
+        break
+    case 2:
+        colour = 'You have chosen blue colour'
+        break
+    case 3:
+        colour = 'You have chosen green colour'
+        break
+    default:
+        colour = 'Indavid number'
+}
+console.log(colour)
+// task 4
+function sumToWhile(n) {
+    sum = 0
+    i = 0
+    while (n >= i) {
+        sum +=i;
+        i++;
+    }
+    console.log(sum)
+}
+// sumToWhile(5)
+function sumToFor(n) {
+    f_sum = 0;
+    for (let f = 1; f <= n; f++ ) { 
+        f_sum += f
+        }
+    console.log(f_sum)
+}
+// sumToFor(5)
+function sumToDoWhile(n) {
+    d_sum = 0;
+    d = 0;
+    do {
+        d_sum += d
+        d++
+    } while (d <= n)
+    console.log(d_sum)
+}
+// sumToDoWhile(5)
+
+// Task 5
+function reverseString(word) {
+    result = word.split('').reverse().join('');
+    console.log(result)
+}
+// reverseString('hello')
+// task 6
+function calculateDiscount(price, discount) {
+    if (discount <= 1 ?? discount <= 0) { 
+        price *= (1-discount)
+        return price
+    } else {
+        alert('Invalid discount, try from 0 to 1')
+    }
+}
+// calculateDiscount(200, 0.30)
+// task 7
+multiplyNumbers = function (x, y) {
+    return x*y
+}
+// multiplyNumbers(1,4)
+// task 8
+const calculateSquareRoot = (number) => number ** (1/2);
+// calculateSquareRoot(225)
+// Task 9
+const student = {
+    name: 'Adilkhan',
+    age: 19,
+    grade: 100
 };
-var s = document.readyState
-if (s==="complete" || s === "loaded" || s === "interactive") init();
-else document.addEventListener("DOMContentLoaded", init, false);
+const cloneStudent = (original) => {
+    return Object.assign({}, original)
+}
+const studentClone = cloneStudent(student)
+studentClone.age = 20;
+console.log('Original object', student)
+console.log('Clone', studentClone)
+// task 10
+const student3 = {
+    name: 'Adilkhan',
+    age: 19,
+    grades: [],
+    major: 'Economics and Data Science',
+    addGrade: function(grade) {
+        this.grades.push(grade);
+    },
+    calculateAverageGrade: function() {
+        if (this.grades.length === 0) {
+            return 'No grades available'
+        }
+        const sum = this.grades.reduce((total, grade) => total+grade, 0);
+        return sum/this.grades.length;
+    },
+    displayInfo: function() {
+        console.log('Name - ' + this.name)
+        console.log('Age is ' + this.age + ' years old')
+        console.log('Major is ' + this.major)
+        console.log('Average grade is ' + this.calculateAverageGrade())
+    }
+}
+student3.addGrade(99);
+student3.addGrade(100);
+student3.addGrade(95);
+student3.displayInfo();
+// task 11
+const dog = {
+    name: 'Dog',
+    bark: function() {
+    console.log(this.name + ' says: Guf, guf')
+    }
+};
+dog.bark()
+// task 12 
+function Book(title, author, year) {
+    this.title = title;
+    this.author = author;
+    this.year = year;
+}
+const book1 = new Book('The Great Gatsby', 'F. Scott Fitzgerald', 1925);
+console.log(book1.title);
+console.log(book1.author);
+console.log(book1.year)
